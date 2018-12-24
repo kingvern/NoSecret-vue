@@ -10,7 +10,40 @@ export const home_timeline_option = state => state.home_timeline.option
 export const public_timeline = state => state.public_timeline.statuses
 export const public_timeline_option = state => state.public_timeline.option
 
-// notify
+// person
+
+export const address = state => state.tron.address
+export const contract = state => state.tron.contract
+export const checkUserRes = state => state.tron.checkUserRes
+export const writeHash = state => state.tron.writeHash
+export const user = state => state.tron.user
+export const createfee = state => state.tron.createfee
+
+
+
+export const at_time = state => state.at_time.statuses
+export const at_time_option = state => state.at_time.option
+
+export const at_hot = state => state.at_hot.statuses
+export const at_hot_option = state => state.at_hot.option
+
+export const my_post = state => state.my_post.statuses
+export const my_post_option = state => state.my_post.option
+
+export const my_comment = state => state.my_comment.statuses
+export const my_comment_option = state => state.my_comment.option
+
+export const my_donate = state => state.my_donate.statuses
+export const my_donate_option = state => state.my_donate.option
+
+
+export const my_circle = state => state.my_circle.circle_list
+export const my_circle_option = state => state.my_circle.option
+
+
+export const all_circle = state => state.all_circle.circle_list
+export const all_circle_option = state => state.all_circle.option
+
 export const at_me_status = state => state.at_me_status.statuses
 export const at_me_status_option = state => state.at_me_status.option
 export const at_me_comment = state => state.at_me_comment.comments

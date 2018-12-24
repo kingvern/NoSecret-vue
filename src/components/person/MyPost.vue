@@ -1,18 +1,18 @@
 <template lang="html">
-    <div class="atMeStatus">
-        <div class="list"  v-for="x in list">
-            <pixel-content :x="x"></pixel-content>
+    <div class="atMeComment">
+        <div class="list" v-for="x in list">
+            <pixel-item :x="x"></pixel-item>
         </div>
         <div class="refresh-footer" v-if="option.refresh">
             <pixel-spinner :size="'45px'" :color="'#007AFF'"></pixel-spinner>
         </div>
     </div>
 </template>
- 
+
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-    name: "at_me_status",
+    name: "my_post",
     data() {
         return {
             list: []
@@ -20,9 +20,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            statuses: 'at_me_status',
-            option: 'at_me_status_option',
-            showImage: 'image_zoom_show'
+			statuses: 'my_post',
+            option: 'my_post_option',
         })
     },
     watch: {
@@ -34,7 +33,7 @@ export default {
             },
             deep: true
         },
-        statuses: function (val, oldVal) {
+		statuses: function (val, oldVal) {
             if (val) {
                 if (this.option.page == 1) {
                     this.list = val;
@@ -45,7 +44,7 @@ export default {
         }
     },
     created() {
-        this.atMeStatus(1)
+        this.myPost(1)
     },
     mounted() {
 
@@ -58,16 +57,16 @@ export default {
     },
     methods: {
         ...mapActions([
-            'getAtMeStatus'
+            'getMyPost'
         ]),
-        atMeStatus(page) {
-            this.getAtMeStatus(page)
+        myPost(page) {
+            this.getMyPost(page)
         },
         loadMore() {
             let vue = this
             vue.option.refresh = true
             var page = vue.option.page + 1
-            vue.atMeStatus(page)
+            vue.myPost(page)
         },
         scrollBar() {
             var a = document.documentElement.scrollTop == 0 ? document.body.clientHeight : document.documentElement.clientHeight;
@@ -80,9 +79,9 @@ export default {
     }
 }
 </script>
- 
+
 <style lang="css">
-.atMeStatus .list {
+.atHot .list {
     flex: 1;
     background-color: #fff;
     border-radius: 2px;
@@ -91,7 +90,7 @@ export default {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
 }
 
-.atMeStatus .refresh-footer {
+.atHot .refresh-footer {
     margin-bottom: .8rem;
     margin-top: .8rem;
     text-align: center;

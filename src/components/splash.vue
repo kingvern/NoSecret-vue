@@ -16,29 +16,18 @@
                 </div>
             </div>
             <button class="login" v-on:click="oauth">登录</button>
-            <div class="info-footer">
-                <div class="header">
-                    <img class="avatar"   src="../assets/icon.png">
-                </div>
-                <div class="wanbo">
-                    <h2 class="name" >wanbo</h2>
-                    <span class="desc">前面右转的第二排架子上就有啊</span>
-                </div>
-                <div class="follower">
-                    <img v-on:click="goMyGithub" class="avatar"   src="../assets/github.png">
-                    <img v-on:click="goMyWeibo"  class="avatar"   src="../assets/weibo.png">
-                </div>
-            </div>
+
         </div>
         <div id="particles-js"></div>
     </div>
-      
+
 </template>
- 
+
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { HOST_CONCIG, KEY_CONFIG, DEBUG } from '../api/config/api-config'
+import { HOST_CONFIG, KEY_CONFIG, DEBUG } from '../api/config/api-config'
 import { getUrlKey } from '../utils/string-utils'
+import * as artifact from  '../contracts/NoSecret'
 require('particles.js')
 export default {
     name: "splash",
@@ -56,7 +45,8 @@ export default {
             }
         },
         ...mapGetters({
-            loginState: 'login'
+            loginState: 'login',
+			checkUserRes: 'checkUserRes'
         }),
     },
     watch: {
@@ -66,15 +56,37 @@ export default {
             }
         }
     },
+	async created() {
+		console.log('created')
+		let tronWeb = window.tronWeb;
+		console.log('address', tronWeb.defaultAddress.base58)
+		let address = tronWeb.address.fromHex(artifact.networks['*'].address);
+		console.log(artifact.abi, artifact.networks['*'].address, address)
+		let contract = tronWeb.contract(artifact.abi, address);
+		console.log(contract)
+		// console.log('await contract.checkUser().call()', await contract.checkUser().call())
+		let data = {
+			address: address,
+			contract: contract
+		}
+		this.initTron(data)
+		this.checkUser()
+	},
     mounted() {
+    	console.log('mounted')
         this.$nextTick(() => {
             this.initParticleJS()
         })
         this.checkUrl()
+
+
     },
     methods: {
         ...mapActions([
-            'login'
+            'login',
+			'initTron',
+			'checkUser',
+			'getUser'
         ]),
         checkUrl() {
             var vue = this
@@ -88,26 +100,24 @@ export default {
         },
         oauth() {
             var vue = this
-            if (DEBUG) {
+            if (!DEBUG) {
+            	// vue.checkUser()
+				if(vue.checkUserRes){
+					console.log('已经注册')
+					vue.getUser()
+				}else{
+					console.log('还未注册')
+				}
                 vue.goMain()
             } else {
-                var client_id = KEY_CONFIG.app_key;
-                var redirect_uri = KEY_CONFIG.redirect_uri;
-                var oauthUrl = HOST_CONCIG.oauth;
-                window.open(oauthUrl + '?client_id=' + client_id + '&redirect_uri=' + redirect_uri, "_self", "", true);
-            }
+				vue.goMain()
+			}
         },
         goMain() {
             let vue = this
             setTimeout(function () {
                 vue.$router.replace({ name: 'main' });
             }, 2000)
-        },
-        goMyWeibo() {
-            window.open('http://weibo.com/singerwannber', "", true);
-        },
-        goMyGithub() {
-            window.open('https://github.com/Werb', "", true);
         },
         initParticleJS() {
             particlesJS('particles-js', {
@@ -224,7 +234,7 @@ export default {
     }
 }
 </script>
- 
+
 <style lang="css">
 .splash {
     width: 100%;

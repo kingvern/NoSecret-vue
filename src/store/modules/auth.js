@@ -10,7 +10,8 @@ import { oauthPost } from '../../api/impl/auth'
 const state = {
     token: {},
     login: false,
-    logout: true
+    logout: true,
+	owner_address:''
 }
 
 const mutations = {
@@ -36,7 +37,7 @@ const mutations = {
 }
 
 const actions = {
-    // code : oauth2 授权后返回的code 
+    // code : oauth2 授权后返回的code
     login: ({ commit }, code) => {
         oauthPost(
             code,

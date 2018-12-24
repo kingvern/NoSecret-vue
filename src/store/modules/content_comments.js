@@ -37,7 +37,7 @@ const mutations = {
 const actions = {
 
     getContentComments: ({ commit }, data) => {
-        
+
         let id = data.id
         let page = data.page
 
@@ -50,7 +50,7 @@ const actions = {
             id,
             page,
             response => {
-                commit(CONTENT_COMMENTS, response.comments)
+                commit(CONTENT_COMMENTS, response.comment)
                 commit(CONTENT_COMMENTS_REFRESH, false)
             },
             err => {

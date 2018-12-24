@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { HOST_CONCIG, KEY_CONFIG, API_ROUTER_CONFIG } from '../../api/config/api-config'
+import { HOST_CONFIG, KEY_CONFIG, API_ROUTER_CONFIG } from '../../api/config/api-config'
 import { logger } from '../../utils/logger'
 
 export const oauthPost = (code, okCallback, errorCallback) => {
@@ -14,7 +14,7 @@ export const oauthPost = (code, okCallback, errorCallback) => {
     var config = {
         method: 'post',
         url: API_ROUTER_CONFIG.oauth_post,
-        baseURL: HOST_CONCIG.host,
+        baseURL: HOST_CONFIG.host,
         data: oauthData,
         headers: {
             'Content-Type': 'application/json'

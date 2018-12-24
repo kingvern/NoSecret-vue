@@ -10,8 +10,8 @@
             <div class="header-info">
                 <nav class="info-tab">
                     <span class="info-tag" v-on:click="switchTab('home')" >微博 {{formatNum(userInfo.statuses_count)}}</span>
-                    <span class="info-tag" v-on:click="showMyFriend" >关注 {{formatNum(userInfo.friends_count)}}</span>
-                    <span class="info-tag" v-on:click="showMyFollower" >粉丝 {{formatNum(userInfo.followers_count)}}</span>
+                    <span class="info-tag" v-on:click="showMyCircle" >我的圈子 {{formatNum(userInfo.friends_count)}}</span>
+                    <span class="info-tag" v-on:click="showAllCircle" >所有圈子 {{formatNum(userInfo.followers_count)}}</span>
                 </nav>
             </div>
         </div>
@@ -22,7 +22,7 @@
         </div>
     </div>
 </template>
- 
+
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import * as StringUtils from '../utils/string-utils'
@@ -55,11 +55,11 @@ export default {
         showMyContent() {
             this.$router.push({ name: 'myContent' })
         },
-        showMyFollower() {
-            this.$router.push({ name: 'my-fllower' })
+		showMyCircle() {
+            this.$router.push({ name: 'my-circle' })
         },
-        showMyFriend() {
-            this.$router.push({ name: 'my-friend' })
+        showAllCircle() {
+            this.$router.push({ name: 'all-circle' })
         },
         goBack() {
             this.$router.go(-2)
@@ -70,7 +70,7 @@ export default {
     }
 }
 </script>
- 
+
 <style lang="css">
 .profile-header {
     width: 100%;

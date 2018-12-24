@@ -1,18 +1,21 @@
 <template lang="html">
-    <div class="send-comment">
-        <div class="list" v-for="comment in list">
-             <pixel-at-me-comment :comment="comment"></pixel-at-me-comment> 
+    <div class="atTime">
+        <div class="list"  v-for="x in list">
+            <pixel-item :x="x"></pixel-item>
         </div>
-        <div class="refresh-footer"  v-if="option.refresh">
+        <div class="refresh-footer" v-if="option.refresh">
             <pixel-spinner :size="'45px'" :color="'#007AFF'"></pixel-spinner>
         </div>
     </div>
 </template>
- 
+
 <script>
 import { mapActions, mapGetters } from 'vuex'
+
+import * as artifact from '../../contracts/NoSecret'
+
 export default {
-    name: "send-comment",
+    name: "get_circle_by_time",
     data() {
         return {
             list: []
@@ -20,8 +23,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            comments: 'send_comment',
-            option: 'send_comment_option'
+            statuses: 'at_time',
+            option: 'at_time_option',
         })
     },
     watch: {
@@ -33,7 +36,8 @@ export default {
             },
             deep: true
         },
-        comments: function (val, oldVal) {
+        statuses: function (val, oldVal) {
+        	console.log('watch statuses',val)
             if (val) {
                 if (this.option.page == 1) {
                     this.list = val;
@@ -44,7 +48,13 @@ export default {
         }
     },
     created() {
-        this.mySendComment(1)
+        this.atTime(1)
+		// let tronWeb = window.tronWeb;
+		// console.log('address', tronWeb.defaultAddress.base58)
+		// let address = tronWeb.address.fromHex(artifact.networks['*'].address);
+		// console.log(artifact.abi, artifact.networks['*'].address, address)
+		// const contract = tronWeb.contract(artifact.abi, address);
+		// console.log(contract)
     },
     mounted() {
 
@@ -57,16 +67,17 @@ export default {
     },
     methods: {
         ...mapActions([
-            'getMySendComment'
+            'getAtTime'
         ]),
-        mySendComment(page) {
-            this.getMySendComment(page)
+		atTime(page) {
+        	console.log('atTime')
+            this.getAtTime(page)
         },
         loadMore() {
             let vue = this
             vue.option.refresh = true
             var page = vue.option.page + 1
-            vue.mySendComment(page)
+            vue.atTime(page)
         },
         scrollBar() {
             var a = document.documentElement.scrollTop == 0 ? document.body.clientHeight : document.documentElement.clientHeight;
@@ -79,9 +90,9 @@ export default {
     }
 }
 </script>
- 
+
 <style lang="css">
-.send-comment .list {
+.atTime .list {
     flex: 1;
     background-color: #fff;
     border-radius: 2px;
@@ -90,7 +101,7 @@ export default {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
 }
 
-.send-comment .refresh-footer {
+.atTime .refresh-footer {
     margin-bottom: .8rem;
     margin-top: .8rem;
     text-align: center;

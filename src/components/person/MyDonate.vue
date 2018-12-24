@@ -1,18 +1,18 @@
 <template lang="html">
-    <div class="receive-comment">
-        <div class="list" v-for="comment in list">
-             <pixel-at-me-comment :comment="comment"></pixel-at-me-comment> 
+    <div class="atMeComment">
+        <div class="list" v-for="x in list">
+            <pixel-item :x="x"></pixel-item>
         </div>
         <div class="refresh-footer" v-if="option.refresh">
             <pixel-spinner :size="'45px'" :color="'#007AFF'"></pixel-spinner>
         </div>
     </div>
 </template>
- 
+
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-    name: "receive-comment",
+    name: "my_donate",
     data() {
         return {
             list: []
@@ -20,8 +20,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            comments: 'receive_comment',
-            option: 'receive_comment_option'
+			statuses: 'my_donate',
+            option: 'my_donate_option',
         })
     },
     watch: {
@@ -33,7 +33,7 @@ export default {
             },
             deep: true
         },
-        comments: function (val, oldVal) {
+		statuses: function (val, oldVal) {
             if (val) {
                 if (this.option.page == 1) {
                     this.list = val;
@@ -44,7 +44,7 @@ export default {
         }
     },
     created() {
-        this.receiveComment(1)
+        this.myDonate(1)
     },
     mounted() {
 
@@ -57,16 +57,16 @@ export default {
     },
     methods: {
         ...mapActions([
-            'getMyReceiveComment'
+            'getMyDonate'
         ]),
-        receiveComment(page) {
-            this.getMyReceiveComment(page)
+        myDonate(page) {
+            this.getMyDonate(page)
         },
         loadMore() {
             let vue = this
             vue.option.refresh = true
             var page = vue.option.page + 1
-            vue.receiveComment(page)
+            vue.myDonate(page)
         },
         scrollBar() {
             var a = document.documentElement.scrollTop == 0 ? document.body.clientHeight : document.documentElement.clientHeight;
@@ -79,9 +79,9 @@ export default {
     }
 }
 </script>
- 
+
 <style lang="css">
-.receive-comment .list {
+.atHot .list {
     flex: 1;
     background-color: #fff;
     border-radius: 2px;
@@ -90,7 +90,7 @@ export default {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
 }
 
-.receive-comment .refresh-footer {
+.atHot .refresh-footer {
     margin-bottom: .8rem;
     margin-top: .8rem;
     text-align: center;

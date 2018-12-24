@@ -6,8 +6,9 @@ const key_config = {
 
 const host_config = {
     local: 'http://192.168.1.104:8089/',
-    host: 'https://pixel-api.herokuapp.com/',
+    host: 'http://123.207.75.151:8000',
     oauth: 'https://open.weibo.cn/oauth2/authorize',
+	count: '10'
 }
 
 const api_router_config = {
@@ -15,8 +16,19 @@ const api_router_config = {
     home_timeline: '/statuses/home_timeline.json',
     public_timeline: '/statuses/public_timeline.json',
     my_content: '/statuses/user_timeline.json',
-    userinfo: '/users/show.json',
-    content_comments: '/comments/show.json',
+
+    userinfo: '/api/v1/dev/myinfo',
+	get_all_circle:'/api/v1/dev/allcircles',
+	get_my_circle:'mycircles',
+
+    content_comments: '/api/v1/dev/messageinfo',
+	send_post: '/api/v1/dev/create_message',
+	at_time:'/api/v1/dev/newmessages',
+	at_hot:'/api/v1/dev/topmessages',
+	my_post:'/api/v1/dev/mymessages',
+	my_comment:'/api/v1/dev/mycomments',
+	my_donate:'/api/v1/dev/mygives',
+
     send_post_text: '/statuses/update.json',
     send_post_image: '/statuses/upload.json',
     at_me_statue: '/statuses/mentions.json',
@@ -27,7 +39,7 @@ const api_router_config = {
     my_friend: '/friendships/friends.json'
 }
 
-export const HOST_CONCIG = host_config
+export const HOST_CONFIG = host_config
 export const KEY_CONFIG = key_config
 export const API_ROUTER_CONFIG = api_router_config
 export const DEBUG = false

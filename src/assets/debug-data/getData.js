@@ -10,18 +10,22 @@ var hometimeline = status.hometimeline
 var publictimeline = status.publictimeline
 var metimelime = status.metimeline
 var atmestatus = notify.atmestatus
+var attime = notify.attime
+var athot = notify.athot
 var atmecomment = notify.atmecomment
 var receivecomment = notify.receivecomment
 var sendcomment = notify.sendcomment
 var myfollowers = friendship.myfollowers
-var myfriends = friendship.myfriends
-var contentcomment = content.comment
+var myfriends = friendship.mycircle
+var contentcomment = content.contentcomment
 
 export {
     userInfo,
     hometimeline,
     publictimeline,
     metimelime,
+	attime,
+	athot,
     atmestatus,
     atmecomment,
     receivecomment,

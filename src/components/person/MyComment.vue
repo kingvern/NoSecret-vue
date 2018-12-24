@@ -1,18 +1,18 @@
 <template lang="html">
     <div class="atMeComment">
-        <div class="list" v-for="comment in list">
-            <pixel-at-me-comment :comment="comment"></pixel-at-me-comment> 
+        <div class="list" v-for="x in list">
+            <pixel-item :x="x"></pixel-item>
         </div>
         <div class="refresh-footer" v-if="option.refresh">
             <pixel-spinner :size="'45px'" :color="'#007AFF'"></pixel-spinner>
         </div>
     </div>
 </template>
- 
+
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-    name: "at_me_status",
+    name: "my_comment",
     data() {
         return {
             list: []
@@ -20,8 +20,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            comments: 'at_me_comment',
-            option: 'at_me_comment_option',
+            comments: 'my_comment',
+            option: 'my_comment_option',
         })
     },
     watch: {
@@ -44,7 +44,7 @@ export default {
         }
     },
     created() {
-        this.atMeComment(1)
+        this.myComment(1)
     },
     mounted() {
 
@@ -57,16 +57,16 @@ export default {
     },
     methods: {
         ...mapActions([
-            'getAtMeComment'
+            'getMyComment'
         ]),
-        atMeComment(page) {
-            this.getAtMeComment(page)
+        myComment(page) {
+            this.getMyComment(page)
         },
         loadMore() {
             let vue = this
             vue.option.refresh = true
             var page = vue.option.page + 1
-            vue.atMeComment(page)
+            vue.myComment(page)
         },
         scrollBar() {
             var a = document.documentElement.scrollTop == 0 ? document.body.clientHeight : document.documentElement.clientHeight;
@@ -79,9 +79,9 @@ export default {
     }
 }
 </script>
- 
+
 <style lang="css">
-.atMeComment .list {
+.atHot .list {
     flex: 1;
     background-color: #fff;
     border-radius: 2px;
@@ -90,7 +90,7 @@ export default {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05);
 }
 
-.atMeComment .refresh-footer {
+.atHot .refresh-footer {
     margin-bottom: .8rem;
     margin-top: .8rem;
     text-align: center;
